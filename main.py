@@ -16,4 +16,3 @@ btn.grid(column=1, row=0)
 
 window.mainloop()
 
-print("hola")
