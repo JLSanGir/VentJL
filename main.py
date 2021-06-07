@@ -13,8 +13,9 @@ def clicked():
     width = 5
     for i in range(height):  # Rows
         for j in range(width):  # Columns
-            b = Entry(window, text=type(lbl))
-            b.grid(row=i, column=j)
+            b = Entry(window, width=8)
+            b.grid(row=i+30, column=20+j)
+            b.insert(0, '({}, {})'.format(i+30, 20+j))
 
 
 ts = ver_sheets()
