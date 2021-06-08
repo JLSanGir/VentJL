@@ -4,8 +4,10 @@ from openpyxl import *
 
 def ver_sheets():
     #wb = Workbook()
-    wb = load_workbook('C:\DatosF\partesproduccion.xlsm')
-    return wb.sheetnames
+    excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
+    sheet = excel_doc.get_sheet_by_name('EstadoProducc')
+    all_rows = sheet.iter_rows(min_row=1, max_row=10,values_only=True)
+    return all_rows
 
 
 
