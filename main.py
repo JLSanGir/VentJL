@@ -5,10 +5,10 @@ from exceldef import *
 window = Tk()
 
 window.title("NAVE DE GRAPAS")
-window.geometry('1600x400')
+window.geometry('1500x400')
 
 
-def clicked():
+def verproducc():
     height = 10
     width = 8
     ts = ver_sheets('EstadoProducc')
@@ -19,9 +19,10 @@ def clicked():
             if v != None:
                 bcolor = "blue"
                 fcolor = "white"
-                b = Entry(window, width=10, background=bcolor, foreground=fcolor)
-                b.grid(row=i + 30, column=20 + j)
-                b.insert(0, '{:>10}'.format(v))
+                #b = Entry(window, width=10, background=bcolor, foreground=fcolor)
+                b = Label(window, width=10, background=bcolor, foreground=fcolor,text='{:>10}'.format(v))
+                b.grid(row=i + 3, column=20 + j)
+                #b = Label(window, text='{:>10}'.format(v))
             else:
                 i += 1
                 break
@@ -30,11 +31,9 @@ def clicked():
         j = 0
 
 
-
-
-lbl = Label(window, text="")
-lbl.grid(column=5, row=20)
-btn = Button(window, text="Pulsame", command=clicked)
+#lbl = Label(window, text="AQUI")
+#lbl.grid(column=5, row=20)
+btn = Button(window, text="VER PRODUCCIÓN", command=verproducc)
 btn.grid(column=1, row=0)
 
 menubar = creamenu(window)
