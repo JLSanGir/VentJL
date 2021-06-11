@@ -22,8 +22,9 @@ def verproducc():
                 bcolor = "blue"
                 fcolor = "white"
                 #b = Entry(window, width=10, background=bcolor, foreground=fcolor)
-                b = Label(window, width=10, background=bcolor, foreground=fcolor,text='{:>10}'.format(v))
+                b = Label(window, width=12, background=bcolor, foreground=fcolor,text='{:>10}'.format(v))
                 b.grid(row=i + 3, column=j)
+                b.bind('<Button-1>', mouseClick)
                 #b = Label(window, text='{:>10}'.format(v))
             else:
                 salef = True
@@ -35,10 +36,13 @@ def verproducc():
         i += 1
         j = 0
 
-titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA')
+def mouseClick(event):
+    print("mouse clicked")
+
+titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
 #lbl = Label(window, text="PRODUCCIÓN").grid(column=25, row=0)
 for i in range(len(titulos)):
-    lbl = Label(window,  width=10, background='yellow', foreground='black', text=titulos[i])
+    lbl = Label(window,  width=12, background='yellow', foreground='black', text=titulos[i])
     lbl.grid(column=i, row=1)
 #btn = Button(window, text="VER PRODUCCIÓN", command=verproducc)
 #btn.grid(column=1, row=0)
