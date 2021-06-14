@@ -21,10 +21,18 @@ def verproducc():
             if v != None:
                 bcolor = "blue"
                 fcolor = "white"
+                if v == 'Skl1':
+                    bcolor = "green"
+                if v == 'Skl12':
+                    bcolor = "orange"
+                if v != 'Skl12' and v != 'Skl1' and j == 1:
+                    bcolor = "red"
                 #b = Entry(window, width=10, background=bcolor, foreground=fcolor)
-                b = Label(window, width=12, background=bcolor, foreground=fcolor,text='{:>10}'.format(v))
-                b.grid(row=i + 3, column=j)
-                b.bind('<Button-1>', mouseClick)
+                if v != 0 and j < 8:
+                    text = 'R%s/C%s'%(i+3,j)
+                    b = Label(window, width=12, background=bcolor, foreground=fcolor,text='{:>10}'.format(v))
+                    b.grid(row=i + 3, column=j)
+                    b.bind('<Button-1>', lambda e, text=text:handle_click(text))
                 #b = Label(window, text='{:>10}'.format(v))
             else:
                 salef = True
@@ -37,7 +45,10 @@ def verproducc():
         j = 0
 
 def mouseClick(event):
-    print("mouse clicked")
+    print("mouse clicked x= {}, y = {}".format(event.x,event.y))
+
+def handle_click(text):
+    print(text)
 
 titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
 #lbl = Label(window, text="PRODUCCIÓN").grid(column=25, row=0)
