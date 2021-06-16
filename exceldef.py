@@ -1,5 +1,4 @@
 
-
 from openpyxl import *
 
 def ver_sheets(namesheet):
@@ -16,7 +15,6 @@ def ver_sheets(namesheet):
 
     all_rows = sheet.iter_rows(min_row=1, max_row=ultimafilahoja,values_only=True)
     return all_rows, ultimafilahoja
-
 
 
 
