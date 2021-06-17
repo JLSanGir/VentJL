@@ -26,7 +26,7 @@ class Aplicacion():
 
         self.m = Menu(self.raiz, tearoff=0)
         self.m.add_command(label="Historial temperaturas", command=self.abrir)
-        self.m.add_command(label="Copy")
+        self.m.add_command(label="Más")
         self.m.add_command(label="Paste")
         self.m.add_command(label="Reload")
         self.m.add_separator()
