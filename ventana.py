@@ -1,4 +1,4 @@
-from tkinter import *
+from datetime import *
 from tkinter import ttk
 from exceldef import *
 from menudef import *
@@ -11,7 +11,6 @@ class Aplicacion():
         ''' Construye la ventana  principal aplicación '''
 
         self.raiz = Tk()
-        self.raiz.title("NAVE DE GRAPAS")
         self.raiz.geometry('800x300')
 
         self.raiz.resizable(0, 0)
@@ -20,21 +19,19 @@ class Aplicacion():
             lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
             lbl.grid(column=i, row=1)
         self.verproducc()
+        fecha_actualizado = ver_celda("Grapas - Corte de varilla", 2, 1)
+        self.raiz.title("NAVE DE GRAPAS  Actualizado a " + fecha_actualizado.strftime('%d %b %Y'))
 
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
 
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=self.abrir)
+        self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
-        self.m.add_command(label="Paste")
-        self.m.add_command(label="Reload")
-        self.m.add_separator()
-        self.m.add_command(label="Rename")
 
         self.raiz.mainloop()
 
-    def abrir(self):
+    def abrir(self, titulo):
         ''' Construye una ventana de diálogo '''
         self.dialogo = Toplevel()
         Aplicacion.ventana += 1
@@ -44,7 +41,7 @@ class Aplicacion():
         self.dialogo.resizable(True, True)
         ident = self.dialogo.winfo_id()
 
-        titulo = str(Aplicacion.ventana) + " " + str(ident)
+        titulo = str(Aplicacion.ventana) + " " + titulo
         self.dialogo.title(titulo)
         boton = ttk.Button(self.dialogo, text='Cerrar',
                            command=self.dialogo.destroy)
