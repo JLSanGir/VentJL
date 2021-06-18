@@ -16,6 +16,13 @@ def ver_sheets(namesheet):
     all_rows = sheet.iter_rows(min_row=1, max_row=ultimafilahoja,values_only=True)
     return all_rows, ultimafilahoja
 
+def ver_celda(namesheet,row, col):
+    excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
+    sheet = excel_doc.get_sheet_by_name(namesheet)
+    celda = sheet.cell(row, col)
+    return celda.value
+
+
 
 
 # grab the active worksheet

@@ -26,7 +26,7 @@ class Aplicacion():
 
         self.m = Menu(self.raiz, tearoff=0)
         self.m.add_command(label="Historial temperaturas", command=self.abrir)
-        self.m.add_command(label="Copy")
+        self.m.add_command(label="Más")
         self.m.add_command(label="Paste")
         self.m.add_command(label="Reload")
         self.m.add_separator()
@@ -39,13 +39,12 @@ class Aplicacion():
         self.dialogo = Toplevel()
         Aplicacion.ventana += 1
         Aplicacion.posx_y += 50
-        tamypos = '200x100+' + str(Aplicacion.posx_y) + \
-                  '+' + str(Aplicacion.posx_y)
+        tamypos = '300x300+' + str(Aplicacion.posx_y) + '+' + str(Aplicacion.posx_y)
         self.dialogo.geometry(tamypos)
-        self.dialogo.resizable(0, 0)
+        self.dialogo.resizable(True, True)
         ident = self.dialogo.winfo_id()
 
-        titulo = str(Aplicacion.ventana) + ": " + str(ident)
+        titulo = str(Aplicacion.ventana) + " " + str(ident)
         self.dialogo.title(titulo)
         boton = ttk.Button(self.dialogo, text='Cerrar',
                            command=self.dialogo.destroy)
