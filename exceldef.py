@@ -1,7 +1,6 @@
 
 from openpyxl import *
 
-
 def ver_sheets(namesheet):
     excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
     sheet = excel_doc.get_sheet_by_name(namesheet)
@@ -16,6 +15,7 @@ def ver_sheets(namesheet):
 
     all_rows = sheet.iter_rows(min_row=1, max_row=ultimafilahoja,values_only=True)
     return all_rows, ultimafilahoja
+
 
 
 # grab the active worksheet
