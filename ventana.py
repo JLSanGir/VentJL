@@ -13,25 +13,18 @@ class Aplicacion():
 
         self.raiz = Tk()
         self.raiz.geometry('800x300')
-
-        self.mmat = [["" for x in range(8)] for y in range(10)]
-
-        self.raiz.resizable(0, 0)
-        titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
-        for i in range(len(titulos)):
-            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
-            lbl.grid(column=i, row=1)
-        self.verproducc()
+        self.raiz.resizable(True, True)
         fecha_actualizado = ver_celda("Grapas - Corte de varilla", 2, 1)
         self.raiz.title("NAVE DE GRAPAS  Actualizado a " + fecha_actualizado.strftime('%d %b %Y'))
 
+        self.mmat = [["" for x in range(8)] for y in range(10)]
+        self.verproducc()
+
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
-
         self.m = Menu(self.raiz, tearoff=0)
         self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
-
         self.raiz.mainloop()
 
     def abrir(self, titulo):
@@ -55,6 +48,7 @@ class Aplicacion():
     def verproducc(self):
         height = 10
         width = 8
+        self.pon_tit()
         ts, filas = ver_sheets('EstadoProducc')
         j = 0  # filas
         i = 0  # columnas
@@ -95,10 +89,18 @@ class Aplicacion():
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
         print(texto, ac1,ac2)
-        b = Label(self.raiz, width=10, background="yellow", foreground="black", text=self.mmat[ac-3][bc]).grid(row=ac, column=bc)
+        tt = self.mmat[ac-3][bc]
+        b = Label(self.raiz, width=10, background="yellow", foreground="black",
+                  text='{:>10}'.format(tt)).grid(row=ac, column=bc)
 
     def do_popup(self, event):
         try:
             self.m.tk_popup(event.x_root, event.y_root)
         finally:
             self.m.grab_release()
+
+    def pon_tit(self):
+        titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
+        for i in range(len(titulos)):
+            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
+            lbl.grid(column=i, row=1)
