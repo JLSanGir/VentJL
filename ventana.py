@@ -2,6 +2,7 @@ from datetime import *
 from tkinter import ttk
 from exceldef import *
 from menudef import *
+import re
 
 class Aplicacion():
     ventana = 0
@@ -12,6 +13,8 @@ class Aplicacion():
 
         self.raiz = Tk()
         self.raiz.geometry('800x300')
+
+        self.mmat = [["" for x in range(8)] for y in range(10)]
 
         self.raiz.resizable(0, 0)
         titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
@@ -70,6 +73,7 @@ class Aplicacion():
                     if v != 0 and j < 8:
                         text = 'R%s/C%s' % (i + 3, j)
                         b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v))
+                        self.mmat[i][j] = v
                         b.grid(row=i + 3, column=j)
                         b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
                         b.bind("<Button-3>", self.do_popup)
@@ -82,11 +86,16 @@ class Aplicacion():
                 break
             i += 1
             j = 0
-    def mouseClick(self, event):
-        print("mouse clicked x= {}, y = {}".format(event.x,event.y))
 
-    def handle_click(self, text):
-        print(text)
+    def handle_click(self, texto):
+        act = re.findall(r"R\d+", texto)
+        ac1 = act[0].replace("R", "")
+        ac = int(ac1)
+        act = re.findall(r"C\d+", texto)
+        ac2 = act[0].replace("C", "")
+        bc = int(ac2)
+        print(texto, ac1,ac2)
+        b = Label(self.raiz, width=10, background="yellow", foreground="black", text=self.mmat[ac-3][bc]).grid(row=ac, column=bc)
 
     def do_popup(self, event):
         try:
