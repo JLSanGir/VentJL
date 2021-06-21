@@ -1,7 +1,8 @@
-from tkinter import *
+from datetime import *
 from tkinter import ttk
 from exceldef import *
 from menudef import *
+import re
 
 class Aplicacion():
     ventana = 0
@@ -11,7 +12,6 @@ class Aplicacion():
         ''' Construye la ventana  principal aplicación '''
 
         self.raiz = Tk()
-        self.raiz.title("NAVE DE GRAPAS")
         self.raiz.geometry('800x300')
 
         self.raiz.resizable(0, 0)
@@ -20,21 +20,21 @@ class Aplicacion():
             lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
             lbl.grid(column=i, row=1)
         self.verproducc()
+        fecha_actualizado = ver_celda("Grapas - Corte de varilla", 2, 1)
+        self.raiz.title("NAVE DE GRAPAS  Actualizado a " + fecha_actualizado.strftime('%d %b %Y'))
+
+        self.mmat = [["" for x in range(8)] for y in range(10)]
+        self.verproducc()
 
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
 
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=self.abrir)
-        self.m.add_command(label="Más")
-        self.m.add_command(label="Paste")
-        self.m.add_command(label="Reload")
-        self.m.add_separator()
-        self.m.add_command(label="Rename")
-
+        self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
+        self.m.add_command(label="Copy")
         self.raiz.mainloop()
 
-    def abrir(self):
+    def abrir(self, titulo):
         ''' Construye una ventana de diálogo '''
         self.dialogo = Toplevel()
         Aplicacion.ventana += 1
@@ -44,7 +44,7 @@ class Aplicacion():
         self.dialogo.resizable(True, True)
         ident = self.dialogo.winfo_id()
 
-        titulo = str(Aplicacion.ventana) + " " + str(ident)
+        titulo = str(Aplicacion.ventana) + " " + titulo
         self.dialogo.title(titulo)
         boton = ttk.Button(self.dialogo, text='Cerrar',
                            command=self.dialogo.destroy)
@@ -55,6 +55,7 @@ class Aplicacion():
     def verproducc(self):
         height = 10
         width = 8
+        self.pon_tit()
         ts, filas = ver_sheets('EstadoProducc')
         j = 0  # filas
         i = 0  # columnas
@@ -73,6 +74,7 @@ class Aplicacion():
                     if v != 0 and j < 8:
                         text = 'R%s/C%s' % (i + 3, j)
                         b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v))
+                        self.mmat[i][j] = v
                         b.grid(row=i + 3, column=j)
                         b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
                         b.bind("<Button-3>", self.do_popup)
@@ -85,11 +87,18 @@ class Aplicacion():
                 break
             i += 1
             j = 0
-    def mouseClick(self, event):
-        print("mouse clicked x= {}, y = {}".format(event.x,event.y))
 
-    def handle_click(self, text):
-        print(text)
+    def handle_click(self, texto):
+        act = re.findall(r"R\d+", texto)
+        ac1 = act[0].replace("R", "")
+        ac = int(ac1)
+        act = re.findall(r"C\d+", texto)
+        ac2 = act[0].replace("C", "")
+        bc = int(ac2)
+        print(texto, ac1,ac2)
+        tt = self.mmat[ac-3][bc]
+        b = Label(self.raiz, width=10, background="yellow", foreground="black",
+                  text='{:>10}'.format(tt)).grid(row=ac, column=bc)
 
     def do_popup(self, event):
         try:
