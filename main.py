@@ -3,7 +3,6 @@ from ventana import *
 
 def main():
     mi_app = Aplicacion()
-
     return (0)
 
 

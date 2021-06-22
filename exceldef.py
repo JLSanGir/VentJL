@@ -24,7 +24,6 @@ def ver_celda(namesheet,row, col):
     return celda.value
 
 
-
 # grab the active worksheet
 #ws = wb.active
 

@@ -23,7 +23,6 @@ def creamenu(window):
 
     menubar.add_cascade(label="Edit", menu=editmenu)
     helpmenu = Menu(menubar, tearoff=0)
-
     menubar.add_cascade(label="Help", menu=helpmenu)
 
     return menubar

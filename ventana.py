@@ -66,7 +66,8 @@ class Aplicacion():
                         bcolor = "red"
                     if v != 0 and j < 8:
                         text = 'R%s/C%s' % (i + 3, j)
-                        b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v))
+                        b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v),
+                                  borderwidth=2, relief="groove")
                         self.mmat[i][j] = v
                         b.grid(row=i + 3, column=j)
                         b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
@@ -91,7 +92,7 @@ class Aplicacion():
         print(texto, ac1,ac2)
         tt = self.mmat[ac-3][bc]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
-                  text='{:>10}'.format(tt)).grid(row=ac, column=bc)
+                  text='{:>10}'.format(tt), borderwidth=2, relief="solid").grid(row=ac, column=bc)
 
     def do_popup(self, event):
         try:
@@ -102,5 +103,6 @@ class Aplicacion():
     def pon_tit(self):
         titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
         for i in range(len(titulos)):
-            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
+            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i],
+                        borderwidth=2, relief="groove")
             lbl.grid(column=i, row=1)
