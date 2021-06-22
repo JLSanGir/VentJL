@@ -7,7 +7,10 @@ import re
 class Aplicacion():
     ventana = 0
     posx_y = 0
-
+    r_ant = 0
+    c_ant = 0
+    bcolor = "blue"
+    fcolor = "white"
     def __init__(self):
         ''' Construye la ventana  principal aplicación '''
 
@@ -46,8 +49,6 @@ class Aplicacion():
         self.raiz.wait_window(self.dialogo)
 
     def verproducc(self):
-        height = 10
-        width = 8
         self.pon_tit()
         ts, filas = ver_sheets('EstadoProducc')
         j = 0  # filas
@@ -55,9 +56,9 @@ class Aplicacion():
         salef = False
         for tsa in ts:
             for v in tsa:
+                bcolor = self.bcolor
+                fcolor = self.fcolor
                 if v != None:
-                    bcolor = "blue"
-                    fcolor = "white"
                     if v == 'Skl1':
                         bcolor = "green"
                     if v == 'Skl12':
@@ -89,10 +90,28 @@ class Aplicacion():
         act = re.findall(r"C\d+", texto)
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
-        print(texto, ac1,ac2)
+
         tt = self.mmat[ac-3][bc]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
-                  text='{:>10}'.format(tt), borderwidth=2, relief="solid").grid(row=ac, column=bc)
+                  text='{:>10}'.format(tt), borderwidth=2, relief="solid")
+        b.grid(row=ac, column=bc)
+        b.bind("<Button-3>", self.do_popup)
+
+        if self.r_ant > 0 :
+            tt_ant = self.mmat[self.r_ant-3][self.c_ant]
+            b = Label(self.raiz, width=10, background=self.bcolor, foreground=self.fcolor, text='{:>10}'.format(tt_ant),
+                      borderwidth=2, relief="groove")
+            b.grid(row=self.r_ant, column=self.c_ant)
+            b.bind("<Button-3>", self.do_popup)
+            text = 'R%s/C%s' % (self.r_ant, self.c_ant)
+            b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
+
+        b = Label(self.raiz, width=10, background="white", foreground="black",
+                  text='{:>10}'.format(tt), borderwidth=2, relief="solid")
+        b.grid(row=17, column=2)
+
+        self.r_ant = ac
+        self.c_ant = bc
 
     def do_popup(self, event):
         try:
