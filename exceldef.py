@@ -1,6 +1,7 @@
 
 from openpyxl import *
 
+
 def ver_sheets(namesheet):
     excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
     sheet = excel_doc.get_sheet_by_name(namesheet)
@@ -21,8 +22,6 @@ def ver_celda(namesheet,row, col):
     sheet = excel_doc.get_sheet_by_name(namesheet)
     celda = sheet.cell(row, col)
     return celda.value
-
-
 
 
 # grab the active worksheet

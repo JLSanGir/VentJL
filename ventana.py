@@ -13,13 +13,7 @@ class Aplicacion():
 
         self.raiz = Tk()
         self.raiz.geometry('800x300')
-
-        self.raiz.resizable(0, 0)
-        titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
-        for i in range(len(titulos)):
-            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i])
-            lbl.grid(column=i, row=1)
-        self.verproducc()
+        self.raiz.resizable(True, True)
         fecha_actualizado = ver_celda("Grapas - Corte de varilla", 2, 1)
         self.raiz.title("NAVE DE GRAPAS  Actualizado a " + fecha_actualizado.strftime('%d %b %Y'))
 
@@ -28,7 +22,6 @@ class Aplicacion():
 
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
-
         self.m = Menu(self.raiz, tearoff=0)
         self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
@@ -73,7 +66,8 @@ class Aplicacion():
                         bcolor = "red"
                     if v != 0 and j < 8:
                         text = 'R%s/C%s' % (i + 3, j)
-                        b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v))
+                        b = Label(self.raiz, width=10, background=bcolor, foreground=fcolor, text='{:>10}'.format(v),
+                                  borderwidth=2, relief="groove")
                         self.mmat[i][j] = v
                         b.grid(row=i + 3, column=j)
                         b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
@@ -98,10 +92,17 @@ class Aplicacion():
         print(texto, ac1,ac2)
         tt = self.mmat[ac-3][bc]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
-                  text='{:>10}'.format(tt)).grid(row=ac, column=bc)
+                  text='{:>10}'.format(tt), borderwidth=2, relief="solid").grid(row=ac, column=bc)
 
     def do_popup(self, event):
         try:
             self.m.tk_popup(event.x_root, event.y_root)
         finally:
             self.m.grab_release()
+
+    def pon_tit(self):
+        titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
+        for i in range(len(titulos)):
+            lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i],
+                        borderwidth=2, relief="groove")
+            lbl.grid(column=i, row=1)
