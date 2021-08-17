@@ -1,7 +1,6 @@
 from ventana import *
 
 def main():
-    print("PyCharm")
     mi_app = Aplicacion()
     return 0
 

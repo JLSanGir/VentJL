@@ -1,4 +1,3 @@
-
 from openpyxl import *
 
 
@@ -18,7 +17,7 @@ def ver_sheets(namesheet):
     return all_rows, ultimafilahoja
 
 def ver_celda(namesheet,row, col):
-    excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
+    excel_doc = load_workbook('F:\DatosF\partesproduccion.xlsm')
     sheet = excel_doc.get_sheet_by_name(namesheet)
     celda = sheet.cell(row, col)
     return celda.value

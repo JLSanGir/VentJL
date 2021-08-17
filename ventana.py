@@ -102,7 +102,7 @@ class Aplicacion():
             self.m.grab_release()
 
     def pon_tit(self):
-        titulos = ('COLADA', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
+        titulos = ('-COLADA-', 'TIPO', 'CORTE VAR.', 'URP', 'HORNO', 'INSPECCIÓN', 'PINTURA', 'EXPEDIDOS')
         for i in range(len(titulos)):
             lbl = Label(self.raiz, width=10, background='yellow', foreground='black', text=titulos[i],
                         borderwidth=2, relief="groove")
