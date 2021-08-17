@@ -3,7 +3,7 @@ from openpyxl import *
 
 
 def ver_sheets(namesheet):
-    excel_doc = load_workbook('C:\DatosF\partesproduccion.xlsm')
+    excel_doc = load_workbook('F:\DatosF\partesproduccion.xlsm')
     sheet = excel_doc.get_sheet_by_name(namesheet)
 
     ultimafilahoja = sheet.max_row

@@ -4,6 +4,7 @@ from exceldef import *
 from menudef import *
 import re
 
+
 class Aplicacion():
     ventana = 0
     posx_y = 0
@@ -23,7 +24,7 @@ class Aplicacion():
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
+        self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
         self.raiz.mainloop()
 
@@ -89,8 +90,8 @@ class Aplicacion():
         act = re.findall(r"C\d+", texto)
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
-        print(texto, ac1,ac2)
-        tt = self.mmat[ac-3][bc]
+        print(texto, ac1, ac2)
+        tt = self.mmat[ac - 3][bc]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
                   text='{:>10}'.format(tt), borderwidth=2, relief="solid").grid(row=ac, column=bc)
 
