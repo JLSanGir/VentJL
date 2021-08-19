@@ -2,7 +2,7 @@ from tkinter import *
 
 def donothing(window):
     filewin = Toplevel(window)
-    button = Button(filewin, text="Do nothing button")
+    button = Button(filewin, text="Botón para definir")
     button.pack()
 
 def creamenu(window):
