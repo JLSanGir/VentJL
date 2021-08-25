@@ -1,5 +1,7 @@
 from datetime import *
 from tkinter import ttk
+
+import menudef
 from exceldef import *
 from menudef import *
 import re
@@ -26,7 +28,8 @@ class Aplicacion():
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
+        self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
+        #self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
         self.raiz.mainloop()
 
@@ -83,15 +86,16 @@ class Aplicacion():
             i += 1
             j = 0
 
-    def handle_click(self, texto):
-        act = re.findall(r"R\d+", texto)
+    def handle_click(self, coorde):
+        act = re.findall(r"R\d+", coorde)
         ac1 = act[0].replace("R", "")
         ac = int(ac1)
-        act = re.findall(r"C\d+", texto)
+        act = re.findall(r"C\d+", coorde)
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
 
         tt = self.mmat[ac-3][bc]
+        tcolada = self.mmat[ac-3][0]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
                   text='{:>10}'.format(tt), borderwidth=2, relief="solid")
         b.grid(row=ac, column=bc)
@@ -103,11 +107,12 @@ class Aplicacion():
                       borderwidth=2, relief="groove")
             b.grid(row=self.r_ant, column=self.c_ant)
             b.bind("<Button-3>", self.do_popup)
-            text = 'R%s/C%s' % (self.r_ant, self.c_ant)
-            b.bind('<Button-1>', lambda e, text=text: self.handle_click(text))
+            coorde = 'R%s/C%s' % (self.r_ant, self.c_ant)
+            b.bind('<Button-1>', lambda e, text=coorde: self.handle_click(coorde))
 
+        #celda abajo
         b = Label(self.raiz, width=10, background="white", foreground="black",
-                  text='{:>10}'.format(tt), borderwidth=2, relief="solid")
+                  text='{:>10}'.format(tcolada), borderwidth=2, relief="solid")
         b.grid(row=17, column=2)
 
         self.r_ant = ac

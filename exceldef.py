@@ -1,6 +1,7 @@
 from openpyxl import *
 
-archivoexcel = "F:\DatosF\partesproduccion.xlsm"
+archivoexcel = "S:\Principal\partesproduccion.xlsm"
+#archivoexcel = "F:\DatosF\partesproduccion.xlsm"
 def ver_sheets(namesheet):
     excel_doc = load_workbook(archivoexcel)
     #excel_doc = load_workbook('F:\DatosF\partesproduccion.xlsm')
