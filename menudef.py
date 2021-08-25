@@ -1,5 +1,6 @@
 from tkinter import *
 from ventana import *
+from exceldef import rec_columna, ver_sheets
 
 
 def donothing(window):
@@ -7,7 +8,7 @@ def donothing(window):
     button = Button(filewin, text="Botón para definir")
     button.pack()
 
-def coladasAnteriores(window):
+def coladasAnteriores(window, titulo):
     ''' Construye una ventana de diálogo '''
 
     filewin = Toplevel(window)
@@ -18,17 +19,15 @@ def coladasAnteriores(window):
     filewin.resizable(True, True)
     ident = filewin.winfo_id()
 
-    titulo = "COLADAS TERMINADAS"
     filewin.title(titulo)
-    boton = Button(filewin, text='Cerrar', command=filewin.destroy)
-    boton.pack(side=BOTTOM, padx=20, pady=20)
+    ts, f = ver_sheets("Grapas - Pintura")
 
-    #raiz.wait_window(filewin)
+
 
 def creamenu(window):
     menubar = Menu(window)
     filemenu = Menu(menubar, tearoff=0)
-    filemenu.add_command(label="Coladas terminadas", command=lambda: coladasAnteriores(window))
+    filemenu.add_command(label="Coladas terminadas", command=lambda: coladasAnteriores(window, "COLADAS TERMINADAS"))
     filemenu.add_command(label="Open", command=lambda :donothing(window))
     filemenu.add_separator()
     filemenu.add_command(label="Exit", command=window.quit)

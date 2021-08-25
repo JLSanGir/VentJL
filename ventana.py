@@ -28,8 +28,8 @@ class Aplicacion():
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
-        #self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
+        #self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
+        self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
         self.raiz.mainloop()
 
@@ -54,6 +54,7 @@ class Aplicacion():
     def verproducc(self):
         self.pon_tit()
         ts, filas = ver_sheets('EstadoProducc')
+
         j = 0  # filas
         i = 0  # columnas
         salef = False
@@ -87,6 +88,7 @@ class Aplicacion():
             j = 0
 
     def handle_click(self, coorde):
+        '''Acciones al cliquear una celda'''
         act = re.findall(r"R\d+", coorde)
         ac1 = act[0].replace("R", "")
         ac = int(ac1)
@@ -119,6 +121,7 @@ class Aplicacion():
         self.c_ant = bc
 
     def do_popup(self, event):
+        '''Para poner el menú del botón izquierdo'''
         try:
             self.m.tk_popup(event.x_root, event.y_root)
         finally:
