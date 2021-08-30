@@ -1,5 +1,4 @@
-from datetime import *
-from tkinter import ttk
+
 from exceldef import *
 from menudef import *
 import re
@@ -7,7 +6,10 @@ import re
 class Aplicacion():
     ventana = 0
     posx_y = 0
-
+    r_ant = 0
+    c_ant = 0
+    bcolor = "blue"
+    fcolor = "white"
     def __init__(self):
         ''' Construye la ventana  principal aplicación '''
 
@@ -23,7 +25,8 @@ class Aplicacion():
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
         self.m = Menu(self.raiz, tearoff=0)
-        self.m.add_command(label="Historial temperaturas", command=lambda:self.abrir("Temperaturas"))
+        #self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
+        self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
         self.m.add_command(label="Copy")
         self.raiz.mainloop()
 
@@ -46,18 +49,17 @@ class Aplicacion():
         self.raiz.wait_window(self.dialogo)
 
     def verproducc(self):
-        height = 10
-        width = 8
         self.pon_tit()
-        ts, filas = ver_sheets('EstadoProducc')
+        ts, filas = ver_sheets('EstadoProducc', 1,99)
+
         j = 0  # filas
         i = 0  # columnas
         salef = False
         for tsa in ts:
             for v in tsa:
+                bcolor = self.bcolor
+                fcolor = self.fcolor
                 if v != None:
-                    bcolor = "blue"
-                    fcolor = "white"
                     if v == 'Skl1':
                         bcolor = "green"
                     if v == 'Skl12':
@@ -82,19 +84,41 @@ class Aplicacion():
             i += 1
             j = 0
 
-    def handle_click(self, texto):
-        act = re.findall(r"R\d+", texto)
+    def handle_click(self, coorde):
+        '''Acciones al cliquear una celda'''
+        act = re.findall(r"R\d+", coorde)
         ac1 = act[0].replace("R", "")
         ac = int(ac1)
-        act = re.findall(r"C\d+", texto)
+        act = re.findall(r"C\d+", coorde)
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
-        print(texto, ac1,ac2)
+
         tt = self.mmat[ac-3][bc]
+        tcolada = self.mmat[ac-3][0]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
-                  text='{:>10}'.format(tt), borderwidth=2, relief="solid").grid(row=ac, column=bc)
+                  text='{:>10}'.format(tt), borderwidth=2, relief="solid")
+        b.grid(row=ac, column=bc)
+        b.bind("<Button-3>", self.do_popup)
+
+        if self.r_ant > 0 :
+            tt_ant = self.mmat[self.r_ant-3][self.c_ant]
+            b = Label(self.raiz, width=10, background=self.bcolor, foreground=self.fcolor, text='{:>10}'.format(tt_ant),
+                      borderwidth=2, relief="groove")
+            b.grid(row=self.r_ant, column=self.c_ant)
+            b.bind("<Button-3>", self.do_popup)
+            coorde = 'R%s/C%s' % (self.r_ant, self.c_ant)
+            b.bind('<Button-1>', lambda e, text=coorde: self.handle_click(coorde))
+
+        #celda abajo
+        b = Label(self.raiz, width=10, background="white", foreground="black",
+                  text='{:>10}'.format(tcolada), borderwidth=2, relief="solid")
+        b.grid(row=17, column=2)
+
+        self.r_ant = ac
+        self.c_ant = bc
 
     def do_popup(self, event):
+        '''Para poner el menú del botón izquierdo'''
         try:
             self.m.tk_popup(event.x_root, event.y_root)
         finally:
