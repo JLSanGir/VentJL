@@ -1,7 +1,4 @@
-from datetime import *
-from tkinter import ttk
 
-import menudef
 from exceldef import *
 from menudef import *
 import re
@@ -53,7 +50,7 @@ class Aplicacion():
 
     def verproducc(self):
         self.pon_tit()
-        ts, filas = ver_sheets('EstadoProducc')
+        ts, filas = ver_sheets('EstadoProducc', 1,99)
 
         j = 0  # filas
         i = 0  # columnas
