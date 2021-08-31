@@ -16,7 +16,7 @@ def coladasAnteriores(window, titulo):
     filewin = Toplevel(window)
 
     posx_y = 50
-    tamypos = '800x300+' + str(posx_y) + '+200'
+    tamypos = '400x800+' + str(posx_y) + '+200'
     filewin.geometry(tamypos)
     filewin.resizable(True, True)
     ident = filewin.winfo_id()
@@ -40,35 +40,49 @@ def coladasAnteriores(window, titulo):
         for x in t:
             lst_can.append(x)
 
-    print(type(lst_col))
-    print(type(lst_col[1]))
-    print(lst_col[1])
-    colad = "F-123456"
-    print(type(colad))
-    print(colad)
     datos = {}
     # datos = { i : lst_col[i] for i in range(1, len(lst_col))}
     ii = 0
-    for colada in lst_col:
-        #colad = str((re.findall(r"[A-Z]-\d+", str(colada))))
-        #print(type(colada))
-        print(str(colada) + ",   indice: " + str(ii) + ": " + str(lst_col[ii]))
-        #colada = colada.replace("(", "")
-        if ii>0 :
-            datos[lst_col[ii]] = ["01/01/2000", 0]
-        #datos.setdefault(colad, ["01/01/2000", 0])
-        ii += 1
-    #for c in lst_col:
-    #    ii = lst_col.index(str(c))
-    #    datos[c] = [c[lst_fec[ii], lst_can[ii]]]
+    # print(lst_fec)
+    for ii in range(1, f):
+        if lst_col[ii] in datos:
+            print(datos.get(lst_col[ii])[1])
+            print(lst_can[ii])
+            v = int(datos.get(lst_col[ii])[1]) + int(lst_can[ii])
+            # v = 0
+            datos[lst_col[ii]] = [lst_fec[ii], v]
+        else:
+            datos[lst_col[ii]] = [lst_fec[ii], int(lst_can[ii])]
 
-    print(lst_col)
-    print(lst_fec)
     print(lst_col[2])
     print(datos)
-
+    print(list(datos.items())[2])
+    print(list(datos.values())[2][1])
+    # print(type(datos.values(2)))
+    # datos(lst_col[2]) = 2222
     datos[lst_col[2]] = ["01/01/2021", 1111]
+    print(datos[lst_col[2]])
     print(datos)
+
+    bcolor = "blue"
+    fcolor = "white"
+    j = 0  # filas
+    i = 0  # columnas
+
+    frame = Frame( filewin,bg='#A8B9BF')
+    text_box = Text(filewin,height=13,width=32,font=(12))
+    text_box.grid(row=0, column=0)
+    text_box.config(bg='#D9D8D7')
+    scrollbar = Scrollbar(filewin, orient=VERTICAL)
+    scrollbar.grid(row=0, column=1, sticky=NS)
+    text_box.config(yscrollcommand=scrollbar.set)
+    scrollbar.config(command=text_box.yview)
+
+    for v in datos:
+        b = Label(filewin, width=20, background=bcolor, foreground=fcolor, text=v,
+                  borderwidth=2, relief="groove")
+        b.grid(row=i + 3, column=j)
+        i += 1
 
 
 def creamenu(window):
