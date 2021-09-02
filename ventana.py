@@ -1,7 +1,7 @@
-
 from exceldef import *
 from menudef import *
 import re
+
 
 class Aplicacion():
     ventana = 0
@@ -10,6 +10,7 @@ class Aplicacion():
     c_ant = 0
     bcolor = "blue"
     fcolor = "white"
+
     def __init__(self):
         ''' Construye la ventana  principal aplicación '''
 
@@ -25,32 +26,32 @@ class Aplicacion():
         menubar = creamenu(self.raiz)
         self.raiz.config(menu=menubar)
         self.m = Menu(self.raiz, tearoff=0)
-        #self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
+        # self.m.add_command(label="Historial temperaturas", command=lambda:menudef.coladasAnteriores(self.raiz))
         self.m.add_command(label="Historial temperaturas", command=lambda: self.abrir("Temperaturas"))
-        self.m.add_command(label="Copy")
+        self.m.add_command(label="Fatiga", command=lambda: self.abrir("Fatiga"))
         self.raiz.mainloop()
 
-    def abrir(self, titulo):
+    def abrir(self, ttitulo):
         ''' Construye una ventana de diálogo '''
-        self.dialogo = Toplevel()
-        Aplicacion.ventana += 1
+        # self.dialogo = Toplevel()
+        # Aplicacion.ventana += 1
         Aplicacion.posx_y += 50
-        tamypos = '300x300+' + str(Aplicacion.posx_y) + '+' + str(Aplicacion.posx_y)
-        self.dialogo.geometry(tamypos)
-        self.dialogo.resizable(True, True)
-        ident = self.dialogo.winfo_id()
+        # tamypos = '300x300+' + str(Aplicacion.posx_y) + '+' + str(Aplicacion.posx_y)
+        # self.dialogo.geometry(tamypos)
+        # self.dialogo.resizable(True, True)
+        # ident = self.dialogo.winfo_id()
 
-        titulo = str(Aplicacion.ventana) + " " + titulo
-        self.dialogo.title(titulo)
-        boton = ttk.Button(self.dialogo, text='Cerrar',
-                           command=self.dialogo.destroy)
-        boton.pack(side=BOTTOM, padx=20, pady=20)
+        top = Toplevel()
+        top.title(ttitulo)
+        top.geometry("500x500+" + str(Aplicacion.posx_y) + '+' + str(Aplicacion.posx_y))
+        boton = Button(top, text='Cerrar', command=top.destroy)
+        boton.pack(side=BOTTOM, padx=10, pady=10)
 
-        self.raiz.wait_window(self.dialogo)
+        # self.raiz.wait_window(self.dialogo)
 
     def verproducc(self):
         self.pon_tit()
-        ts, filas = ver_sheets('EstadoProducc', 1,99)
+        ts, filas = ver_sheets('EstadoProducc', 1, 99)
 
         j = 0  # filas
         i = 0  # columnas
@@ -93,15 +94,15 @@ class Aplicacion():
         ac2 = act[0].replace("C", "")
         bc = int(ac2)
 
-        tt = self.mmat[ac-3][bc]
-        tcolada = self.mmat[ac-3][0]
+        tt = self.mmat[ac - 3][bc]
+        tcolada = self.mmat[ac - 3][0]
         b = Label(self.raiz, width=10, background="yellow", foreground="black",
                   text='{:>10}'.format(tt), borderwidth=2, relief="solid")
         b.grid(row=ac, column=bc)
         b.bind("<Button-3>", self.do_popup)
 
-        if self.r_ant > 0 :
-            tt_ant = self.mmat[self.r_ant-3][self.c_ant]
+        if self.r_ant > 0:
+            tt_ant = self.mmat[self.r_ant - 3][self.c_ant]
             b = Label(self.raiz, width=10, background=self.bcolor, foreground=self.fcolor, text='{:>10}'.format(tt_ant),
                       borderwidth=2, relief="groove")
             b.grid(row=self.r_ant, column=self.c_ant)
@@ -109,7 +110,7 @@ class Aplicacion():
             coorde = 'R%s/C%s' % (self.r_ant, self.c_ant)
             b.bind('<Button-1>', lambda e, text=coorde: self.handle_click(coorde))
 
-        #celda abajo
+        # celda abajo
         b = Label(self.raiz, width=10, background="white", foreground="black",
                   text='{:>10}'.format(tcolada), borderwidth=2, relief="solid")
         b.grid(row=17, column=2)

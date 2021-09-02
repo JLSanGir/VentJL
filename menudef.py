@@ -64,9 +64,9 @@ def coladasAnteriores(window, titulo):
     print(datos[lst_col[2]])
     print(datos)
 
-    bcolor = "blue"
     fcolor = "white"
     j = 0  # filas
+    bcolor = "blue"
     i = 0  # columnas
 
     frame = Frame( filewin,bg='#A8B9BF')
