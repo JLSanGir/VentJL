@@ -69,7 +69,6 @@ def coladasAnteriores(window, titulo):
     bcolor = "blue"
     i = 0  # columnas
 
-
     for v in datos:
         b = Label(filewin, width=20, background=bcolor, foreground=fcolor, text=v,
                   borderwidth=2, relief="groove")

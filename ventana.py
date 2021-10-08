@@ -2,6 +2,7 @@ from exceldef import *
 from menudef import *
 import re
 
+
 class Aplicacion():
     ventana = 0
     posx_y = 0

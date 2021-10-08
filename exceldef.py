@@ -1,5 +1,6 @@
 from openpyxl import *
 
+
 archivoexcel = "S:\Principal\partesproduccion.xlsm"
 #archivoexcel = "C:\partesproduccion.xlsm"
 #archivoexcel = "F:\DatosF\partesproduccion.xlsm"
