@@ -1,4 +1,3 @@
-
 from openpyxl import *
 
 archivoexcel = "S:\Principal\partesproduccion.xlsm"

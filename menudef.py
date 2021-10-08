@@ -69,14 +69,6 @@ def coladasAnteriores(window, titulo):
     bcolor = "blue"
     i = 0  # columnas
 
-    frame = Frame( filewin,bg='#A8B9BF')
-    text_box = Text(filewin,height=13,width=32,font=(12))
-    text_box.grid(row=0, column=0)
-    text_box.config(bg='#D9D8D7')
-    scrollbar = Scrollbar(filewin, orient=VERTICAL)
-    scrollbar.grid(row=0, column=1, sticky=NS)
-    text_box.config(yscrollcommand=scrollbar.set)
-    scrollbar.config(command=text_box.yview)
 
     for v in datos:
         b = Label(filewin, width=20, background=bcolor, foreground=fcolor, text=v,
