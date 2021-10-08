@@ -3,7 +3,6 @@ from tkinter import *
 from ventana import *
 from exceldef import *
 
-
 def donothing(window):
     filewin = Toplevel(window)
     button = Button(filewin, text="Botón para definir")
